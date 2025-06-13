@@ -15,7 +15,8 @@ exports.getProductById = async (req, res) => {
     if (!p) return res.status(404).json({ message: 'Product not found' });
     res.status(200).json(p);
   } catch (err) {
-    res.status(err.kind === 'ObjectId' ? 400 : 500).json({ message: 'Invalid product ID' });
+    const status = err.kind === 'ObjectId' ? 400 : 500;
+    res.status(status).json({ message: 'Invalid product ID' });
   }
 };
 
@@ -31,10 +32,14 @@ exports.createProduct = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
   try {
-    const p = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    const p = await Product.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
     if (!p) return res.status(404).json({ message: 'Product not found' });
     res.status(200).json(p);
-  } catch (err) {
+  } catch {
     res.status(400).json({ message: 'Invalid update data' });
   }
 };
@@ -45,6 +50,7 @@ exports.deleteProduct = async (req, res) => {
     if (!del) return res.status(404).json({ message: 'Product not found' });
     res.status(200).json({ message: 'Product deleted successfully' });
   } catch (err) {
-    res.status(err.kind === 'ObjectId' ? 400 : 500).json({ message: 'Invalid product ID' });
+    const status = err.kind === 'ObjectId' ? 400 : 500;
+    res.status(status).json({ message: 'Invalid product ID' });
   }
 };

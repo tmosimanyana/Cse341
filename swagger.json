@@ -3,89 +3,104 @@
   "info": {
     "title": "Contacts & Products API",
     "version": "1.0.0",
-    "description": "API documentation for contacts and products"
+    "description": "Simple CRUD API for contacts and products"
   },
-  "servers": [
-    {
-      "url": "http://localhost:3000"
-    }
-  ],
+  "servers": [{ "url": "/" }],
   "paths": {
     "/contacts": {
-      "get": {
-        "summary": "Get all contacts",
-        "responses": {
-          "200": {
-            "description": "List of contacts"
-          }
-        }
-      },
+      "get": { "responses": { "200": { "description": "List of contacts" } } },
       "post": {
-        "summary": "Create a contact",
-        "responses": {
-          "201": {
-            "description": "Contact created"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactCreate"
+              }
+            }
           }
+        },
+        "responses": {
+          "201": { "description": "Created" },
+          "400": { "description": "Invalid data" }
         }
       }
     },
     "/contacts/{id}": {
       "get": {
-        "summary": "Get contact by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A single contact"
-          },
-          "404": {
-            "description": "Contact not found"
-          }
-        }
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Found" }, "404": { "description": "Not found" } }
       },
       "put": {
-        "summary": "Update a contact",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Contact updated"
-          }
-        }
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ContactUpdate" } } }
+        },
+        "responses": { "200": { "description": "Updated" }, "400": { "description": "Invalid data" } }
       },
       "delete": {
-        "summary": "Delete a contact",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Contact deleted"
-          }
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Deleted" }, "404": { "description": "Not found" } }
+      }
+    },
+    "/products": {
+      "get": { "responses": { "200": { "description": "List of products" } } },
+      "post": {
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProductCreate" } } }
+        },
+        "responses": { "201": { "description": "Created" }, "400": { "description": "Invalid data" } }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "params": { "in": "path", "name": "id", "schema": { "type": "string" }, "required": true },
+        "responses": { "200": { "description": "Found" }, "404": { "description": "Not found" } }
+      },
+      "put": {
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ProductUpdate" } } }
+        },
+        "responses": { "200": { "description": "Updated" }, "400": { "description": "Invalid data" } }
+      },
+      "delete": {
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Deleted" }, "404": { "description": "Not found" } }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ContactCreate": {
+        "type": "object",
+        "required": ["firstName", "lastName", "email", "birthday"],
+        "properties": {
+          "firstName": { "type": "string" },
+          "lastName": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "favoriteColor": { "type": "string" },
+          "birthday": { "type": "string", "format": "date" }
         }
+      },
+      "ContactUpdate": {
+        "allOf": [{ "$ref": "#/components/schemas/ContactCreate" }]
+      },
+      "ProductCreate": {
+        "type": "object",
+        "required": ["name", "price", "category"],
+        "properties": {
+          "name": { "type": "string" },
+          "price": { "type": "number" },
+          "category": { "type": "string" },
+          "inStock": { "type": "boolean" }
+        }
+      },
+      "ProductUpdate": {
+        "allOf": [{ "$ref": "#/components/schemas/ProductCreate" }]
       }
     }
   }

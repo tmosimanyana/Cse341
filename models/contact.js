@@ -5,7 +5,7 @@ const contactSchema = new mongoose.Schema({
   lastName:  { type: String, required: true, trim: true },
   email:     { type: String, required: true, lowercase: true, match: [/.+\@.+\..+/, 'Invalid email'] },
   favoriteColor: { type: String, trim: true },
-  birthday: { type: Date, required: true }
+  birthday:  { type: Date, required: true }
 });
 
 module.exports = mongoose.model('Contact', contactSchema);

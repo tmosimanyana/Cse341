@@ -1,22 +1,32 @@
+require('dotenv').config();
 const express = require('express');
-const dotenv = require('dotenv');
 const cors = require('cors');
 const swaggerUI = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
-
-dotenv.config();
+const connectDB = require('./config/db');
 
 const app = express();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-require('./config/db')();
+// Connect to MongoDB
+// Use either MONGODB_URI or DATABASE_URL for compatibility
+targetUri = process.env.MONGODB_URI || process.env.DATABASE_URL;
+if (!targetUri) {
+  console.error('🔴 MongoDB connection URI not defined. Set MONGODB_URI or DATABASE_URL.');
+  process.exit(1);
+}
+connectDB(targetUri);
 
-app.use('/contacts', require('./routes/contacts'));
-app.use('/products', require('./routes/products'));
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+// Routes('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-app.get('/', (req, res) => res.send('Contacts & Products API is live!'));
+// Health check
+app.get('/', (req, res) => {
+  res.send('✅ Contacts & Products API is live!');
+});
 
+// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
