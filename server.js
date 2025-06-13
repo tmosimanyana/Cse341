@@ -1,29 +1,22 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const swaggerUI = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 dotenv.config();
+
 const app = express();
-
-const PORT = process.env.PORT || 3000;
-
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
-const connectDB = require('./config/db');
-connectDB();
+require('./config/db')();
 
-// Routes
-const contactsRoutes = require('./routes/contacts');
-app.use('/contacts', contactsRoutes);
+app.use('/contacts', require('./routes/contacts'));
+app.use('/products', require('./routes/products'));
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-app.get('/', (req, res) => {
-  res.send('Contacts API is running...');
-});
+app.get('/', (req, res) => res.send('Contacts & Products API is live!'));
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
