@@ -17,15 +17,14 @@ app.use((req, res, next) => {
 // --- 2) Built‑in Middleware ---
 app.use(cors());
 app.use(express.json());
-
 // --- 3) DB Connection ---
 const targetUri = process.env.MONGODB_URI || process.env.DATABASE_URL;
+console.log('🔍 Using MongoDB URI:', targetUri);   // ← New line to print your actual URI
 if (!targetUri) {
   console.error('🔴 MongoDB URI missing. Set MONGODB_URI or DATABASE_URL.');
   process.exit(1);
 }
 connectDB(targetUri);
-
 // --- 4) Mount API Routers ---
 const contactsRouter = require('./routes/contacts');
 const productsRouter = require('./routes/products');
