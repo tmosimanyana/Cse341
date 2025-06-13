@@ -1,5 +1,4 @@
 // config/db.js
-// Establishes a MongoDB connection using the provided URI without terminating the server on failure
 const mongoose = require('mongoose');
 
 /**
@@ -18,7 +17,7 @@ const connectDB = async (uri) => {
     console.log('✅ Connected to MongoDB');
   } catch (err) {
     console.error('🔴 MongoDB connection error:', err);
-    // Do NOT exit here—allow the server to stay up so we can test routing
+    // NOTE: Do NOT exit the process here; let Express stay up for routing tests
   }
 };
 
