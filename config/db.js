@@ -1,15 +1,26 @@
+// config/db.js
+// Establishes a MongoDB connection using the provided URI without terminating the server on failure
 const mongoose = require('mongoose');
 
-const connectDB = async () => {
+/**
+ * Connects to MongoDB using the given URI.
+ * @param {string} uri - The MongoDB connection string.
+ */
+const connectDB = async (uri) => {
   try {
-    const uri = process.env.MONGODB_URI;
-    if (!uri) throw new Error('📡 MONGODB_URI not defined');
-    await mongoose.connect(uri);
+    if (!uri) {
+      throw new Error('📡 MongoDB connection URI not defined');
+    }
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log('✅ Connected to MongoDB');
   } catch (err) {
     console.error('🔴 MongoDB connection error:', err);
-    process.exit(1);
+    // Do NOT exit here—allow the server to stay up so we can test routing
   }
 };
 
 module.exports = connectDB;
+
