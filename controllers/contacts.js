@@ -78,3 +78,15 @@ exports.deleteContact = async (req, res) => {
   }
 };
 
+exports.createContact = async (req, res) => {
+  try {
+    console.log('📥 Incoming Contact Data:', req.body); // ← Add this
+    const newContact = new Contact(req.body);
+    const saved = await newContact.save();
+    res.status(201).json(saved);
+  } catch (err) {
+    console.error('❌ Create Contact Error:', err); // ← Add this
+    const status = err.name === 'ValidationError' ? 400 : 500;
+    res.status(status).json({ message: err.message });
+  }
+};
