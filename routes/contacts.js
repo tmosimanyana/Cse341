@@ -1,16 +1,13 @@
-// routes/contacts.js
 const express = require('express');
 const router = express.Router();
-const ctrl = require('../controllers/contacts');
+const controller = require('../controllers/contacts');
+const ensureAuth = require('../middleware/auth');
 
-// W01 Required Endpoints Only
-router.get('/', ctrl.getAllContacts);
-router.get('/:id', ctrl.getContactById);
-
-// The following will be added in W02:
-// router.post('/', ctrl.createContact);
-// router.put('/:id', ctrl.updateContact);
-// router.delete('/:id', ctrl.deleteContact);
+router.get('/', controller.getAllContacts);
+router.get('/:id', controller.getContactById);
+router.post('/', ensureAuth, controller.createContact);
+router.put('/:id', ensureAuth, controller.updateContact);
+router.delete('/:id', ensureAuth, controller.deleteContact);
 
 module.exports = router;
 
