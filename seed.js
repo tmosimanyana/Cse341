@@ -1,38 +1,27 @@
-const fs = require('fs');
-const csv = require('csv-parser');
+// seed.js
+require('dotenv').config();
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 const Contact = require('./models/contact');
+const contacts = require('./data/contacts.json');
 
-dotenv.config();
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+async function seed() {
+  try {
+    const uri = process.env.MONGODB_URI;
+    if (!uri) throw new Error('MONGODB_URI not set in .env');
+    await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log('Connected to MongoDB');
 
-const results = [];
+    await Contact.deleteMany({});
+    console.log('Cleared contacts collection');
 
-fs.createReadStream('contacts.csv')
-  .pipe(csv())
-  .on('data', (data) => {
-    if (data['First Name'] && data['E-mail 1 - Value']) {
-      results.push({
-        firstName: data['First Name'] || 'N/A',
-        lastName: data['Last Name'] || 'N/A',
-        email: data['E-mail 1 - Value'] || 'noemail@example.com',
-        favoriteColor: ['Red', 'Blue', 'Green', 'Yellow'][Math.floor(Math.random() * 4)],
-        birthday: '2000-01-01',
-      });
-    }
-  })
-  .on('end', async () => {
-    try {
-      await Contact.deleteMany({});
-      await Contact.insertMany(results);
-      console.log('Contacts imported successfully!');
-      process.exit();
-    } catch (err) {
-      console.error('Error importing contacts:', err);
-      process.exit(1);
-    }
-  });
+    await Contact.insertMany(contacts);
+    console.log(`Imported ${contacts.length} contacts!`);
+    process.exit(0);
+  } catch (err) {
+    console.error('Seeding error:', err);
+    process.exit(1);
+  }
+}
+
+seed();
+

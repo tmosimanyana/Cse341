@@ -1,0 +1,68 @@
+[
+  {
+    "_id": { "$oid": "650a1f1a0000000000000001" },
+    "firstName": "Alex",
+    "middleName": null,
+    "lastName": "Boitshepo",
+    "nickname": null,
+    "name": "Alex Boitshepo",
+    "emails": [],
+    "phones": [
+      { "label": "Mobile", "number": "+26777019108" }
+    ],
+    "address": null
+  },
+  {
+    "_id": { "$oid": "650a1f1a0000000000000002" },
+    "firstName": "Amantle",
+    "middleName": null,
+    "lastName": null,
+    "nickname": null,
+    "name": "Amantle",
+    "emails": [],
+    "phones": [
+      { "label": "Mobile", "number": "72 370 469" }
+    ],
+    "address": null
+  },
+  {
+    "_id": { "$oid": "650a1f1a0000000000000003" },
+    "firstName": "Amyy",
+    "middleName": null,
+    "lastName": null,
+    "nickname": null,
+    "name": "Amyy",
+    "emails": [],
+    "phones": [
+      { "label": "Mobile", "number": "71 355 071" }
+    ],
+    "address": null
+  },
+  {
+    "_id": { "$oid": "650a1f1a0000000000000004" },
+    "firstName": "Artswana",
+    "middleName": null,
+    "lastName": null,
+    "nickname": null,
+    "name": "Artswana",
+    "emails": [],
+    "phones": [
+      { "label": "Mobile", "number": "+26771317077" }
+    ],
+    "address": null
+  },
+  {
+    "_id": { "$oid": "650a1f1a0000000000000005" },
+    "firstName": "Baboloki",
+    "middleName": null,
+    "lastName": null,
+    "nickname": "✌️",
+    "name": "Baboloki",
+    "emails": [],
+    "phones": [
+      { "label": "Mobile", "number": "+26775081373" }
+    ],
+    "address": null
+  }
+]
+
