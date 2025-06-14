@@ -12,15 +12,15 @@ This is a RESTful API for managing contacts and products, supporting full CRUD o
 
 ## API Documentation
 The Swagger UI for this API is available at:  
-`https://yourappname.onrender.com/api-docs`
+https://cse341-qieq.onrender.com/api-docs`
 
 ## Live Demo
 API is live at:  
-`https://yourappname.onrender.com`
+https://cse341-qieq.onrender.com
 
 ## YouTube Demo Video
 Watch the demo video showing the full CRUD operations, authentication flow, and deployment here:  
-[https://www.youtube.com/watch?v=YOUR_VIDEO_ID](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
+https://youtu.be/p1q3rWf1xR4
 
 ## Installation
 
