@@ -1,3 +1,4 @@
+// routes/auth.js
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
@@ -11,14 +12,14 @@ router.get('/google/callback',
   })
 );
 
+router.get('/failure', (req, res) => {
+  res.send('Failed to authenticate');
+});
+
 router.get('/logout', (req, res) => {
   req.logout(() => {
     res.redirect('/');
   });
-});
-
-router.get('/auth/failure', (req, res) => {
-  res.send('Failed to authenticate.');
 });
 
 module.exports = router;
