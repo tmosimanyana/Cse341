@@ -392,3 +392,458 @@
           "500": {
             "description": "Internal server error",
             "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/skills/{id}": {
+      "get": {
+        "tags": ["Skills"],
+        "summary": "Get skill by ID",
+        "description": "Retrieve a specific skill by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Skill ID",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{24}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Skill retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Skill"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Skill not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Skills"],
+        "summary": "Update skill",
+        "description": "Update an existing skill",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Skill ID",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{24}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SkillInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Skill updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Skill"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error or invalid ID format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Skill not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Skills"],
+        "summary": "Delete skill",
+        "description": "Delete a skill from the portfolio",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Skill ID",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{24}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Skill deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Skill deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Skill not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Professional": {
+        "type": "object",
+        "properties": {
+          "professionalName": {
+            "type": "string",
+            "example": "Tinny Bothepha Mosimanyana"
+          },
+          "base64Image": {
+            "type": "string",
+            "description": "Base64 encoded profile image"
+          },
+          "nameLink": {
+            "type": "object",
+            "properties": {
+              "firstName": {
+                "type": "string",
+                "example": "Tinny"
+              },
+              "url": {
+                "type": "string",
+                "format": "uri",
+                "example": "https://github.com/Bo-Tinny"
+              }
+            }
+          },
+          "primaryDescription": {
+            "type": "string",
+            "example": " – Backend Developer | Node.js | MongoDB"
+          },
+          "workDescription1": {
+            "type": "string",
+            "example": "I'm a software developer passionate about building secure, scalable backend systems."
+          },
+          "workDescription2": {
+            "type": "string",
+            "example": "My expertise includes JavaScript, Express, MongoDB, and RESTful API development."
+          },
+          "linkTitleText": {
+            "type": "string",
+            "example": "Connect with me:"
+          },
+          "linkedInLink": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string",
+                "example": "LinkedIn Profile"
+              },
+              "link": {
+                "type": "string",
+                "format": "uri",
+                "example": "https://www.linkedin.com/in/tinny-bothepha/"
+              }
+            }
+          },
+          "githubLink": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string",
+                "example": "GitHub Portfolio"
+              },
+              "link": {
+                "type": "string",
+                "format": "uri",
+                "example": "https://github.com/tmosimanyana"
+              }
+            }
+          },
+          "contactText": {
+            "type": "string",
+            "example": "Feel free to reach out for collaboration or to connect!"
+          }
+        }
+      },
+      "Project": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{24}$",
+            "example": "507f1f77bcf86cd799439011"
+          },
+          "title": {
+            "type": "string",
+            "example": "E-Commerce Platform"
+          },
+          "description": {
+            "type": "string",
+            "example": "A full-stack e-commerce platform built with Node.js and MongoDB"
+          },
+          "technologies": {
+            "type": "string",
+            "example": "Node.js, Express, MongoDB, React"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Planning", "In Progress", "Completed", "On Hold"],
+            "example": "Completed"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://github.com/username/project"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2024-01-15"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2024-03-20"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["_id", "title", "description", "technologies", "status"]
+      },
+      "ProjectInput": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "E-Commerce Platform"
+          },
+          "description": {
+            "type": "string",
+            "example": "A full-stack e-commerce platform built with Node.js and MongoDB"
+          },
+          "technologies": {
+            "type": "string",
+            "example": "Node.js, Express, MongoDB, React"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Planning", "In Progress", "Completed", "On Hold"],
+            "example": "Completed"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://github.com/username/project"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2024-01-15"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2024-03-20"
+          }
+        },
+        "required": ["title", "description", "technologies", "status"]
+      },
+      "Skill": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{24}$",
+            "example": "507f1f77bcf86cd799439011"
+          },
+          "name": {
+            "type": "string",
+            "example": "JavaScript"
+          },
+          "category": {
+            "type": "string",
+            "example": "Programming Languages"
+          },
+          "proficiency": {
+            "type": "string",
+            "enum": ["Beginner", "Intermediate", "Advanced", "Expert"],
+            "example": "Advanced"
+          },
+          "description": {
+            "type": "string",
+            "example": "Experience with ES6+, async/await, and modern JavaScript frameworks"
+          },
+          "yearsOfExperience": {
+            "type": "number",
+            "example": 3
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["_id", "name", "category", "proficiency"]
+      },
+      "SkillInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "JavaScript"
+          },
+          "category": {
+            "type": "string",
+            "example": "Programming Languages"
+          },
+          "proficiency": {
+            "type": "string",
+            "enum": ["Beginner", "Intermediate", "Advanced", "Expert"],
+            "example": "Advanced"
+          },
+          "description": {
+            "type": "string",
+            "example": "Experience with ES6+, async/await, and modern JavaScript frameworks"
+          },
+          "yearsOfExperience": {
+            "type": "number",
+            "example": 3
+          }
+        },
+        "required": ["name", "category", "proficiency"]
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Something went wrong"
+          },
+          "message": {
+            "type": "string",
+            "example": "Detailed error message"
+          }
+        }
+      }
+    }
+  }
+}
